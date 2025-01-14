@@ -5,6 +5,8 @@ function HtmlElement(type,textContext)
    _id+=1
    this.type=type
    this.textContext=textContext
+   if(new.target)
+    throw new Error("cannot create an instance from abstract class")
 }
 
 HtmlElement.prototype.render=function()
@@ -61,16 +63,32 @@ SelectElement.prototype.render=function ()
   {
     let type=document.getElementById("tpyeElement").value
     let text=document.getElementById("textElement").value
-    let element=new HtmlElement("type",text)
-    element.render()
+    
+    try
+    {
+      let element=new HtmlElement("type",text)
+      element.render()
+    }
+    catch(error)
+    {
+      console.log("ERROR!!!",error.message)
+    }
   }
 
   function createImg()
   {
     let src=document.getElementById("url").value
     let alt=document.getElementById("alt").value
-    let element=new ImageElement(src,alt)
-    element.render()
+    try
+    {
+      let element=new ImageElement(src,alt)
+      element.render()
+    }
+    catch(error)
+    {
+      console.log("ERROR!!!",error.message)
+    }
+    
     
   }
 
@@ -78,6 +96,13 @@ SelectElement.prototype.render=function ()
   {
     
     let list=document.getElementById("list").value
+    try
+    {
     let element=new SelectElement(list)
     element.render()
+    }
+   catch(error)
+   {
+      console.log("ERROR!!!",error.message)
+   }
   }
